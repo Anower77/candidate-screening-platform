@@ -1,0 +1,28 @@
+services:
+  backend:
+    image: anower77/candidate-screening-platform:backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=True
+      - DJANGO_SECRET_KEY=assessment-development-key-change-in-production
+    volumes:
+      - db_data:/app
+
+  frontend:
+    image: anower77/candidate-screening-platform:frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        - VITE_API_URL=http://localhost:8000/api
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+
+volumes:
+  db_data:
