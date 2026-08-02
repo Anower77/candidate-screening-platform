@@ -2,7 +2,8 @@ from pathlib import Path
 from datetime import timedelta
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-SECRET_KEY = 'assessment-development-key-change-in-production'
+import os
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'assessment-development-key-change-in-production')
 DEBUG = True
 ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
@@ -19,7 +20,9 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'config.urls'
 TEMPLATES = [{'BACKEND': 'django.template.backends.django.DjangoTemplates', 'DIRS': [], 'APP_DIRS': True, 'OPTIONS': {'context_processors': ['django.template.context_processors.request', 'django.contrib.auth.context_processors.auth']}}]
 WSGI_APPLICATION = 'config.wsgi.application'
-DATABASES = {'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': BASE_DIR / 'db' / 'db.sqlite3'}}
+_DB_DIR = BASE_DIR / 'db'
+_DB_DIR.mkdir(exist_ok=True)
+DATABASES = {'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': _DB_DIR / 'db.sqlite3'}}
 AUTH_PASSWORD_VALIDATORS = []
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
