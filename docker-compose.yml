@@ -10,7 +10,7 @@ services:
       - DEBUG=True
       - DJANGO_SECRET_KEY=assessment-development-key-change-in-production
     volumes:
-      - db_data:/app
+      - db_data:/app/db
 
   frontend:
     image: anower77/candidate-screening-platform:frontend
